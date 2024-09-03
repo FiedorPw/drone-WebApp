@@ -58,7 +58,7 @@ def save_to_json():
         with open(temp_filename, 'w') as temp_file:
             json.dump(telemetry_data, temp_file, indent=4)
         shutil.move(temp_filename, log_filename)
-    
+
     save_count += 1
     if save_count >= 5:
         # Reset save count and create a new log file
