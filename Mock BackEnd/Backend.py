@@ -1,6 +1,13 @@
+"""
+Mock backend czyli kod udający wysyłanie telemetri z drona zeby można było kodzić bez dostępu do niego.
+Na stałe wyrzuca jeden plik json na 127.0.0.1/api/telemetry tak jakby robił to tru backend.
+Losuje i zmienia o około procent dane zeby można było testować updatowanie danych na froncie.
+"""
+
 from flask import Flask, jsonify, send_file
 import json
 import os
+import random
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -18,15 +25,28 @@ def read_json_file(file_path):
     else:
         return {"error": "File not found"}
 
+# Function to slightly adjust the telemetry data
+def adjust_data(data):
+    def adjust_value(value):
+        return value * (0.99 + random.random() * 0.02)  # Adjusts value by +/- 1%
+
+    adjusted_data = {}
+    for key, values in data.items():
+        if isinstance(values, list):
+            adjusted_data[key] = [adjust_value(value) if isinstance(value, (int, float)) else value for value in values]
+        else:
+            adjusted_data[key] = values
+    return adjusted_data
+
 # Function to format the telemetry data
 def format_data(data):
-    # Format the telemetry data similar to the first code
+    data = adjust_data(data)  # Adjust data before formatting
     formatted_data = {
         "Roll": [round(value, 2) for value in data.get("Roll", [])],
         "Pitch": [round(value, 2) for value in data.get("Pitch", [])],
         "Yaw": [round(value, 2) for value in data.get("Yaw", [])],
-        "Latitude": [data.get("Latitude", [])],
-        "Longitude": [data.get("Longitude", [])],
+        "Latitude": data.get("Latitude", []),
+        "Longitude": data.get("Longitude", []),
         "Altitude": [alt / 1e3 for alt in data.get("Altitude", [])],
         "HDOP": [hdop / 100.0 for hdop in data.get("HDOP", [])],
         "VDOP": [vdop / 100.0 for vdop in data.get("VDOP", [])],

@@ -84,44 +84,48 @@
                 <div class="button">
                     <span class="material-icons">open_in_full</span>
                 </div>
+                <!-- debug do sprawdzania dodawania markerów -->
+                <div class="button">
+                    <button style="color: white" @click="addMarkerToMap">
+                        Add Marker
+                    </button>
+                </div>
             </div>
 
             <!-- Google Map -->
-            <div id="map" class="google-map"></div>
+            <div id="map" class="google-map">
+                <GoogleMap
+                    ref="googleMap"
+                    @map-ready="onMapReady"
+                    :latitude="lat"
+                    :longitude="lng"
+                />
+            </div>
         </div>
     </main>
 </template>
-
 <script>
+import GoogleMap from "../components/GoogleMap.vue";
+import yellowDotIcon from "@/assets/yellow-dot.png";
+
 export default {
+    name: "dashboard",
+    components: {
+        GoogleMap,
+    },
     data() {
         return {
             data: null,
             loading: false,
             error: null,
             telemetryData: null,
-            map: null,
+            mapReady: false,
             marker: null,
+            lat: 52.2297, // Default latitude
+            lng: 21.016, // Default longitude
         };
     },
     methods: {
-        async fetchData() {
-            this.loading = true;
-            this.error = null;
-            try {
-                const response = await fetch(
-                    "http://localhost:5000/api/telemetria",
-                );
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                this.data = await response.json();
-            } catch (e) {
-                this.error = e.message;
-            } finally {
-                this.loading = false;
-            }
-        },
         async fetchTelemetry() {
             try {
                 const response = await fetch(
@@ -136,46 +140,27 @@ export default {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                this.telemetryData = await response.json();
-                this.updateMapMarker();
+                this.telemetryData = await response.json(); // call as a function
+
+                this.lat = parseFloat(this.telemetryData.Latitude[0]);
+                this.lng = parseFloat(this.telemetryData.Longitude[0]);
             } catch (error) {
                 console.error("Error fetching telemetry:", error);
             }
         },
-        initMap() {
-            this.map = new google.maps.Map(document.getElementById("map"), {
-                center: { lat: 0, lng: 0 },
-                zoom: 15,
-            });
-            this.marker = new google.maps.Marker({
-                position: { lat: 0, lng: 0 },
-                map: this.map,
-                title: "Drone Location",
-            });
-        },
-        updateMapMarker() {
-            if (this.telemetryData) {
-                const latitude = this.telemetryData.Latitude[0];
-                const longitude = this.telemetryData.Longitude[0];
-                const position = { lat: latitude, lng: longitude };
-                console.log(position);
 
-                // Update the map's center and marker position
-                this.map.setCenter(position);
-                this.marker.setPosition(position);
-            }
+        startTelemetryFetch(interval = 1000) {
+            this.fetchTelemetry();
+            setInterval(this.fetchTelemetry, interval);
+        },
+        onMapReady() {
+            this.mapReady = true;
+            this.startTelemetryFetch();
         },
     },
     mounted() {
-        // Load Google Maps script and initialize map
-        const googleMapsScript = document.createElement("script");
-        googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBFmj02gl59eDUcuwpplc3UY1YcLu8v0Fc&callback=initMap`;
-        googleMapsScript.async = true;
-        window.initMap = this.initMap; // Bind the initMap function to the window object
-        document.head.appendChild(googleMapsScript);
-
-        this.fetchData();
-        this.fetchTelemetry();
+        // console.log(this.telemetryData);
+        this.startTelemetryFetch();
     },
 };
 </script>

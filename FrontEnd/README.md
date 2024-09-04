@@ -6,7 +6,7 @@ Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://
 
 # Requirements
 
-python3-flask-cors
+pip install python3-flask-cors
 
 # Jagodowe dane do UX
 
