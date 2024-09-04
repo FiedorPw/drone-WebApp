@@ -107,12 +107,12 @@
 
             <!-- Google Map -->
             <div id="map" class="google-map">
-                <!-- <GoogleMap
+                <GoogleMap
                     ref="googleMap"
                     @map-ready="onMapReady"
                     :latitude="lat"
                     :longitude="lng"
-                /> -->
+                />
             </div>
         </div>
     </main>
