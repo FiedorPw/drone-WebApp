@@ -7,9 +7,11 @@ from datetime import datetime
 import shutil
 from threading import Thread, Lock
 from flask import Flask, jsonify
+from flask_cors import CORS
 
 # Initialize Flask app
 app = Flask(__name__)
+CORS(app)
 
 # Establish connection to the flight controller
 master = mavutil.mavlink_connection('/dev/ttyACM0', baud=57600)
@@ -101,7 +103,7 @@ def get_gps_position():
         hdop = msg.eph / 100.0
         vdop = msg.epv / 100.0
         satellites_visible = msg.satellites_visible
-        print(f"Latitude: {lat}, Longitude: {lon}, Altitude: {alt} meters, HDOP: {hdop}, VDOP: {vdop}, Satellites: {satellites_visible}")
+        # print(f"Latitude: {lat}, Longitude: {lon}, Altitude: {alt} meters, HDOP: {hdop}, VDOP: {vdop}, Satellites: {satellites_visible}")
         return {
             "Latitude": lat,
             "Longitude": lon,
@@ -120,7 +122,7 @@ def get_attitude():
         roll = math.degrees(msg.roll)
         pitch = math.degrees(msg.pitch)
         yaw = math.degrees(msg.yaw)
-        print(f"Roll: {roll:.2f}°, Pitch: {pitch:.2f}°, Yaw: {yaw:.2f}°")
+        # print(f"Roll: {roll:.2f}°, Pitch: {pitch:.2f}°, Yaw: {yaw:.2f}°")
         return {
             "Roll": roll,
             "Pitch": pitch,
@@ -135,7 +137,7 @@ def get_battery_status():
     if msg:
         voltage = msg.voltages[0] / 1000.0
         current = msg.current_battery / 100.0
-        print(f"Voltage: {voltage}V, Current: {current}A")
+        # print(f"Voltage: {voltage}V, Current: {current}A")
         return {
             "Voltage": voltage,
             "Current": current
@@ -148,7 +150,7 @@ def get_flight_mode():
     msg = master.recv_match(type='HEARTBEAT', blocking=True)
     if msg:
         mode = mavutil.mode_string_v10(msg)
-        print(f"Current flight mode: {mode}")
+        # print(f"Current flight mode: {mode}")
         return mode
     return None
 
@@ -160,10 +162,10 @@ def get_arm_status():
     if msg:
         armed = msg.base_mode & mavutil.mavlink.MAV_MODE_FLAG_SAFETY_ARMED
         if armed:
-            print("Drone is armed")
+            # print("Drone is armed")
             return True
         else:
-            print("Drone is disarmed")
+            # print("Drone is disarmed")
             return False
     else:
         print("No heartbeat message received")

@@ -1,0 +1,59 @@
+
+> dron@0.0.0 dev
+> vite
+
+
+  VITE v5.4.0  ready in 1370 ms
+
+  ➜  Local:   http://localhost:3000/
+  ➜  Network: http://192.168.77.183:3000/
+  ➜  Network: http://192.168.77.184:3000/
+
+> dron@0.0.0 dev
+> vite
+
+Port 3000 is in use, trying another one...
+
+  VITE v5.4.0  ready in 1322 ms
+
+  ➜  Local:   http://localhost:3001/
+  ➜  Network: http://192.168.77.183:3001/
+  ➜  Network: http://192.168.77.184:3001/
+Heartbeat from system (system 1 component 0)
+Requesting data streams...
+Getting telemetry data...
+ * Serving Flask app 'Backend'
+ * Debug mode: off
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.77.183:5000
+Press CTRL+C to quit
+
+> dron@0.0.0 dev
+> vite
+
+Traceback (most recent call last):
+  File "/home/KNR/KNR-dron/drone-WebApp/./BackEnd/Backend.py", line 10, in <module>
+    from flask_cors import CORS
+ModuleNotFoundError: No module named 'flask_cors'
+Port 3000 is in use, trying another one...
+
+  VITE v5.4.0  ready in 1981 ms
+
+  ➜  Local:   http://localhost:3001/
+  ➜  Network: http://192.168.77.183:3001/
+  ➜  Network: http://192.168.77.184:3001/
+
+> dron@0.0.0 dev
+> vite
+
+Port 3000 is in use, trying another one...
+Port 3001 is in use, trying another one...
+
+  VITE v5.4.0  ready in 1238 ms
+
+  ➜  Local:   http://localhost:3002/
+  ➜  Network: http://192.168.77.183:3002/
+  ➜  Network: http://192.168.77.184:3002/
+192.168.77.128 - - [04/Sep/2024 18:27:12] "GET / HTTP/1.1" 404 -
