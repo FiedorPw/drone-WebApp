@@ -2,12 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MJPG Stream</title>
+    <title>Flight Data Display</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f2f5;
+            margin: 0;
+        }
+        .data-card {
+            background-color: #e5ecee;
+            border-radius: 8px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .data-card h3 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #333;
+        }
+        .data-card p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #555;
+        }
+        .data-card .highlight {
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
-    <h1>Live Camera Feed</h1>
-    <img src="http://127.0.0.1:8080/?action=stream" alt="Live Camera Stream">
+    <div class="data-card">
+        <h3>Flight Data</h3>
+        <p><span class="highlight">Roll, Pitch, Yaw:</span> 2.97°, 1.69°, 84.07°</p>
+        <p><span class="highlight">Latitude, Longitude, Altitude:</span> 52.255°, 21.157°, -0.02m</p>
+        <p><span class="highlight">HDOP, VDOP:</span> 0.996%, 99.7%</p>
+        <p><span class="highlight">Satellites:</span> 6.1</p>
+        <p><span class="highlight">Flight Mode:</span> STABILIZE</p>
+        <p><span class="highlight">Voltage:</span> 4.67V</p>
+        <p><span class="highlight">Current:</span> 13.53A</p>
+        <p><span class="highlight">Armed:</span> No</p>
+    </div>
 </body>
 </html>

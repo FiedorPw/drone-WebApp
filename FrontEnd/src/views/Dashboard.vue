@@ -6,52 +6,59 @@
             <div class="status-panel">
                 <div class="status-info">
                     <p>
-                        roll, pitch, yaw<br />{{
+                        <b>roll, pitch, yaw</b><br />{{
                             telemetryData
                                 ? `${telemetryData.Roll[0]}°, ${telemetryData.Pitch[0]}°, ${telemetryData.Yaw[0]}°`
                                 : "---"
                         }}
                     </p>
                     <p>
-                        latitude longitude altitude<br />{{
+                        <b>latitude longitude altitude</b><br />{{
                             telemetryData
-                                ? `${telemetryData.Latitude[0]}, ${telemetryData.Longitude[0]}, ${telemetryData.Altitude[0]}m`
+                                ? `${(telemetryData.Latitude[0] / 10000000).toFixed(3)}°   ${(telemetryData.Longitude[0] / 10000000).toFixed(3)}°  ${telemetryData.Altitude[0].toFixed(2)}m`
                                 : "---"
                         }}
                     </p>
                     <p>
-                        HDOP VDOP<br />{{
+                        <b>HDOP VDOP</b><br />{{
                             telemetryData
-                                ? `${telemetryData.HDOP[0]}%, ${telemetryData.VDOP[0]}%`
+                                ? `${telemetryData.HDOP[0].toFixed(3)}%, ${telemetryData.VDOP[0].toFixed(3) * 100}%`
                                 : "---"
                         }}
                     </p>
-                    <p>
-                        Satellites<br />{{
-                            telemetryData ? telemetryData.Satellites[0] : "---"
+                    <p class="inline-telemetry">
+                        <b>Satellites </b
+                        >{{
+                            telemetryData
+                                ? telemetryData.Satellites[0].toFixed(1)
+                                : "---"
                         }}
                     </p>
-                    <p>
-                        Flight Mode<br />{{
+                    <p class="inline-telemetry">
+                        <b>Flight Mode</b>
+                        {{
                             telemetryData ? telemetryData.Flight_Mode[0] : "---"
                         }}
                     </p>
-                    <p>
-                        Voltage<br />{{
+                    <p class="inline-telemetry">
+                        <b>Voltage </b>
+                        {{
                             telemetryData
                                 ? `${telemetryData.Voltage[0]}V`
                                 : "---"
                         }}
                     </p>
-                    <p>
-                        Current<br />{{
+                    <p class="inline-telemetry">
+                        <b>Current </b
+                        >{{
                             telemetryData
                                 ? `${telemetryData.Current[0]}A`
                                 : "---"
                         }}
                     </p>
-                    <p>
-                        Armed<br />{{
+                    <p class="inline-telemetry">
+                        <b>Armed </b
+                        >{{
                             telemetryData
                                 ? telemetryData.Armed[0]
                                     ? "yes"
@@ -100,12 +107,12 @@
 
             <!-- Google Map -->
             <div id="map" class="google-map">
-                <GoogleMap
+                <!-- <GoogleMap
                     ref="googleMap"
                     @map-ready="onMapReady"
                     :latitude="lat"
                     :longitude="lng"
-                />
+                /> -->
             </div>
         </div>
     </main>
@@ -264,7 +271,9 @@ export default {
                 }
             }
         }
-
+        .inline-telemetry {
+            text-align: left;
+        }
         .google-map {
             grid-column: 2 / 3;
             grid-row: 2 / 3;
@@ -276,6 +285,9 @@ export default {
             width: 100%;
             height: 100%;
             border-radius: 1rem;
+        }
+        p {
+            font-size: 20px;
         }
     }
 }
