@@ -65,9 +65,15 @@
             <!-- Main Image -->
             <div class="main-image">
                 <img
-                    src="~@/assets/placeholdery/camera_placeHolder.jpg"
-                    alt="Main View"
+                    v-if="streamAvailable"
+                    :src="streamUrl"
+                    alt="Live Stream"
                 />
+                <img
+                    src="http://127.0.0.1:8080/?action=stream"
+                    alt="Live Camera Stream"
+                />
+                <!-- src="~@/assets/placeholdery/camera_placeHolder.jpg" alt="Main -->
             </div>
 
             <!-- Buttons Panel -->
@@ -85,11 +91,11 @@
                     <span class="material-icons">open_in_full</span>
                 </div>
                 <!-- debug do sprawdzania dodawania markerów -->
-                <div class="button">
+                <!-- <div class="button">
                     <button style="color: white" @click="addMarkerToMap">
                         Add Marker
                     </button>
-                </div>
+                </div> -->
             </div>
 
             <!-- Google Map -->
