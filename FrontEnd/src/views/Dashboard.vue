@@ -77,7 +77,7 @@
                     alt="Live Stream"
                 />
                 <img
-                    src="http://127.0.0.1:8080/?action=stream"
+                    src="http://drone.knr.edu.pl/camera/action=stream"
                     alt="Live Camera Stream"
                 />
                 <!-- src="~@/assets/placeholdery/camera_placeHolder.jpg" alt="Main -->
@@ -142,7 +142,7 @@ export default {
         async fetchTelemetry() {
             try {
                 const response = await fetch(
-                    "http://127.0.0.1:5000/api/telemetry",
+                    "http://192.168.77.184:5000/api",
                     {
                         mode: "cors",
                         headers: {

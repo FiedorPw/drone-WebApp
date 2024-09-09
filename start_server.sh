@@ -3,19 +3,19 @@
 # -m dla mock
 
 # Get the IP address of wlan0
-WLAN0_IP=$(ip -4 addr show wlan0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+WEBIP=$(ip -4 addr show wlan0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
 
 # ustaiwanie ip z palca
-# WLAN0_IP="192.168.77.183"
+# WEBIP="192.168.77.183"
 
 # Export ip jako zmienna globalna
-export WLAN0_IP
+export WEBIP
 
 # Print ip
-echo -e "\033[0;35mWLAN0 IP Address: $WLAN0_IP"
+echo -e "\033[0;35mWLAN0 IP Address: $WEBIP"
 
 # odpalanie frontu port 80
-nohup npm --prefix ./FrontEnd/ run dev &
+sudo nohup npm --prefix ./FrontEnd/ run dev &
 
 # odpalanie backu port 5000
 if [[ "$1" == "-m" ]]; then
@@ -27,11 +27,12 @@ else
     echo -e "\033[1;36mRunning regular backend..."
     nohup python ./BackEnd/Backend.py &
 fi
+
 sleep 0.2
 # odpalanie cockpit port 9090
 sudo systemctl start cockpit
 
-firefox-esr $WLAN0_IP &
+firefox-esr $WEBIP &
 
 # mjpg streamer kamerki port 8080
 
