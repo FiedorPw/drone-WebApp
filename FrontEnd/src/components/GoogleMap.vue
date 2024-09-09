@@ -37,14 +37,15 @@ export default {
     },
 
     mounted() {
-        this.initMap();
+      const MAPS_KEY = process.env.MAPS_KEY
+      this.initMap();
         // zacznie dodawać randomowe numerki
         this.startAddingRandomMarkers();
     },
     methods: {
         async initMap() {
             const loader = new Loader({
-                apiKey: "AIzaSyBFmj02gl59eDUcuwpplc3UY1YcLu8v0Fc", // Replace with your API Key
+                apiKey: "MAPS_KEY", // Replace with your API Key
                 version: "weekly",
             });
 

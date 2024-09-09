@@ -142,7 +142,7 @@ export default {
         async fetchTelemetry() {
             try {
                 const response = await fetch(
-                    "http://192.168.77.184:5000/api",
+                    "https://dron.knr.edu.pl/api",
                     {
                         mode: "cors",
                         headers: {
